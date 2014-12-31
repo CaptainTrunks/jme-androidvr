@@ -1,0 +1,30 @@
+MaterialDef Simple {
+    MaterialParameters {
+        Int NumSamples
+        Texture2D Texture
+        Float MaxFactor
+    }
+ 
+     Technique {
+        VertexShader GLSL150:   Common/MatDefs/Post/Post15.vert
+        FragmentShader GLSL150: MatDefs/SimpleBarrel.frag
+ 
+        WorldParameters {
+            WorldViewProjectionMatrix
+        }
+ 
+        Defines {
+            RESOLVE_MS : NumSamples
+        }
+ 
+    }
+ 
+    Technique {
+        VertexShader GLSL100:   Common/MatDefs/Post/Post.vert
+        FragmentShader GLSL100: MatDefs/SimpleBarrel.frag
+ 
+        WorldParameters {
+            WorldViewProjectionMatrix
+        }
+    }
+}
