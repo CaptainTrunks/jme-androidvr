@@ -29,7 +29,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package android.vr.control;
+package vr.control;
 
 import vr.input.HeadMountedDisplay;
 import com.jme3.export.InputCapsule;
