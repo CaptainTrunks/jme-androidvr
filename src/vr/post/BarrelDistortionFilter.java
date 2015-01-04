@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package android.vr.post;
+package vr.post;
 
 /**
  *
@@ -11,6 +11,7 @@ package android.vr.post;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState;
 import com.jme3.math.FastMath;
 import com.jme3.math.Matrix4f;
 import com.jme3.math.Vector2f;
@@ -20,12 +21,14 @@ import com.jme3.post.Filter;
 import com.jme3.post.Filter;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
+import com.jme3.texture.FrameBuffer;
 import vr.input.HeadMountedDisplayData;
-
+import android.opengl.GLES20;
 /**
  *
  * @author reden
  */
+
 public class BarrelDistortionFilter extends Filter{
 
     private HeadMountedDisplayData hmdData;
@@ -40,13 +43,12 @@ public class BarrelDistortionFilter extends Filter{
     @Override
     protected void initFilter(AssetManager manager, RenderManager renderManager, ViewPort vp, int width, int height) {
         material = new Material(manager, "MatDefs/BarrelDistortion.j3md");
-
         float aspectRatio = (float)(width) / (float)height;
 
         float halfScreenDistance = (hmdData.getDisplayHeight() * 0.5f);
         float yfov = 1.0f * FastMath.atan(halfScreenDistance/hmdData.getEyeToScreenDistance());
 
-        vp.getCamera().setFrustumPerspective(FastMath.RAD_TO_DEG * yfov, aspectRatio, 0.1f, 10000f);
+        vp.getCamera().setFrustumPerspective(FastMath.RAD_TO_DEG * yfov, aspectRatio, vp.getCamera().getFrustumNear(), vp.getCamera().getFrustumFar());
         float viewCenter = hmdData.getDisplayWidth() * 0.5f;
 
         float eyeProjectionShift = viewCenter - hmdData.getLensSeparationDistance() * 0.5f;
@@ -77,6 +79,11 @@ public class BarrelDistortionFilter extends Filter{
     protected Material getMaterial() {
         return material;
     }
-    
-    
+
+    @Override
+    protected void preFrame(float tpf) {
+        super.preFrame(tpf); //To change body of generated methods, choose Tools | Templates.
+        GLES20.glDepthMask(true);
+    }
+
 }

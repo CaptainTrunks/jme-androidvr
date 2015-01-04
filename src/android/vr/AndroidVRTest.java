@@ -5,16 +5,19 @@
 package android.vr;
 
 import android.vr.input.AndroidDisplay;
+import com.jme3.app.FlyCamAppState;
 import vr.state.VRAppState;
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
+import com.jme3.system.AppSettings;
 
 /**
  *
@@ -39,20 +42,24 @@ public class AndroidVRTest extends SimpleApplication{
         VRAppState vrAppState = new VRAppState(display);
         stateManager.attach(vrAppState);
         
-        Box b = new Box(1, 1, 1);
-        Geometry geom = new Geometry("Box", b);
+//        Box b = new Box(1, 1, 1);
+//        Geometry geom = new Geometry("Box", b);
 
         mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", ColorRGBA.Blue);
-        geom.setMaterial(mat);
-        
-        rootNode.attachChild(geom);
+//        geom.setMaterial(mat);
+//        
+//        rootNode.attachChild(geom);
         
         observer = new Node("");
         observer.addControl(vrAppState.getCameraControl());
         rootNode.attachChild(observer);
-        
+        getRenderManager().removePostView(guiViewPort);
+        guiNode.detachAllChildren();
         generateAlignmentCoords();
+//        getFlyByCamera().unregisterInput();
+//        flyCam.setEnabled(false);
+//        stateManager.getState(FlyCamAppState.class).setEnabled(false);
     }
     
     private void generateAlignmentCoords() {
@@ -67,6 +74,13 @@ public class AndroidVRTest extends SimpleApplication{
         }
 
     }
+
+    @Override
+    public void simpleUpdate(float tpf) {
+        super.simpleUpdate(tpf);
+    }
+
+    
 
     private void addBox(Vector3f location) {
         Box b = new Box(0.05f, 0.05f, 0.05f);

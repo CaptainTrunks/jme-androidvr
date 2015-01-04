@@ -48,7 +48,7 @@ public class AndroidDisplay implements HeadMountedDisplay, SensorEventListener {
         sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
 
         hmdData = new HeadMountedDisplayData();
-        // TODO: set from device
+
         DisplayMetrics displaymetrics = new DisplayMetrics();
         JmeAndroidSystem.getActivity().getWindow().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 
@@ -75,7 +75,6 @@ public class AndroidDisplay implements HeadMountedDisplay, SensorEventListener {
             geomagnetic = event.values;
         }
         if (gravity != null && geomagnetic != null) {
-            
             boolean success = SensorManager.getRotationMatrix(R, I, gravity, geomagnetic);
             if (success) {
                 SensorManager.getOrientation(R, orientationVector);

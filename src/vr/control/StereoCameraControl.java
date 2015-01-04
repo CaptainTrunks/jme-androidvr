@@ -76,8 +76,14 @@ public class StereoCameraControl extends CameraControl {
     @Override
     protected void controlUpdate(float tpf) {
         TempVars vars = TempVars.get();
-        Camera camera = getCamera();
+        vars.quat1.set(Quaternion.ZERO);
+        vars.vect1.set(Vector3f.ZERO);
+        vars.vect2.set(Vector3f.ZERO);
+        vars.vect3.set(Vector3f.ZERO);
+        vars.vect4.set(Vector3f.ZERO);
         
+        Camera camera = getCamera();
+
         lookDirection.set(hmd.getOrientation());                    
         vars.quat1.set(spatial.getWorldRotation()).multLocal(lookDirection);
         
