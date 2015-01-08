@@ -23,7 +23,6 @@ import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.texture.FrameBuffer;
 import vr.input.HeadMountedDisplayData;
-import android.opengl.GLES20;
 /**
  *
  * @author reden
@@ -78,12 +77,6 @@ public class BarrelDistortionFilter extends Filter{
     @Override
     protected Material getMaterial() {
         return material;
-    }
-
-    @Override
-    protected void preFrame(float tpf) {
-        super.preFrame(tpf); //To change body of generated methods, choose Tools | Templates.
-        GLES20.glDepthMask(true);
     }
 
 }
